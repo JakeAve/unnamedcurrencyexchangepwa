@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Jaldi|Open+Sans&display=swap" rel="stylesheet">
+    <script defer src="./script.js"></script>
+    <title>Currency Exchange</title>
+</head>
+
+<body class="main-body">
+    <header class="main-header">
+        <h1 class="h1-header">Currency Exchange</h1>
+    </header>
+    <section>
+        <h1 class="h1-header">Favorites</h1>
+        <table class="favorites">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Base</th>
+                    <th>Fee</th>
+                    <th>Amount</th>
+                    <th>Quote</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-rate=".87">
+                    <td>
+                        <input value="1.00" type="number">
+                    </td>
+                    <td>USD</td>
+                    <td>
+                        <select>
+                            <option value=".00">+/- 0%</option>
+                            <option value=".01">+/- 1%</option>
+                            <option value=".02">+/- 2%</option>
+                            <option value=".03">+/- 3%</option>
+                            <option value=".04">+/- 4%</option>
+                            <option value=".05">+/- 5%</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input readonly value="0.87">
+                    </td>
+                    <td>GBR</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="exchange-section">
+        <h1 class="h1-header">Exchange</h1>
+        <form id="exchange-form" class="exchange-container">
+            <div class="from-div">
+                <input id="base-input" name="base-amount" type="number" value="1.00">
+                <select id="base-currency" name="base-currency">
+                    <option value="USD">USD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="GRB">GRB</option>
+                </select>
+            </div>
+            <div class="to-div">
+                <input id="quote-input" name="quote-amount" type="number">
+                <select id="quote-currency" name="quote-currency">
+                    <option value="USD">USD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="GRB">GRB</option>
+                </select>
+            </div>
+            <div class="interest-div">
+                <label>Bank/Card Fee</label>
+                <select id="fee-rate" name="fee-rate">
+                    <option value="0.00">+/- 0%</option>
+                    <option value="0.01">+/- 1%</option>
+                    <option value="0.02">+/- 2%</option>
+                    <option value="0.03">+/- 3%</option>
+                    <option value="0.04">+/- 4%</option>
+                    <option value="0.05">+/- 5%</option>
+                </select>
+            </div>
+            <input hidden id="ex-rate" name="ex-rate" value="">
+            <input hidden id="time-input" name="time-input" value="">
+        </form>
+        <button class="favorites-button">Add to Favorites</button>
+    </section>
+</body>
+
+</html>

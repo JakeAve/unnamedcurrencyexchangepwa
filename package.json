@@ -1,0 +1,17 @@
+{
+  "name": "currency",
+  "version": "0.0.1",
+  "description": "pwa convert currency",
+  "main": "./server/server.js",
+  "scripts": {
+    "nodemon": "nodemon ./server/server.js localhost 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jacob Avery",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
