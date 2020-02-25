@@ -12,79 +12,86 @@
 </head>
 
 <body class="main-body">
-    <header class="main-header">
+    <!-- <header class="main-header">
         <h1 class="h1-header">Currency Exchange</h1>
-    </header>
-    <section>
-        <h1 class="h1-header">Favorites</h1>
-        <table class="favorites">
-            <thead>
-                <tr>
-                    <th>Amount</th>
-                    <th>Base</th>
-                    <th>Fee</th>
-                    <th>Amount</th>
-                    <th>Quote</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-rate=".87">
-                    <td>
-                        <input value="1.00" type="number">
-                    </td>
-                    <td>USD</td>
-                    <td>
-                        <select>
-                            <option value=".00">+/- 0%</option>
-                            <option value=".01">+/- 1%</option>
-                            <option value=".02">+/- 2%</option>
-                            <option value=".03">+/- 3%</option>
-                            <option value=".04">+/- 4%</option>
-                            <option value=".05">+/- 5%</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input readonly value="0.87">
-                    </td>
-                    <td>GBR</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    </header> -->
     <section class="exchange-section">
         <h1 class="h1-header">Exchange</h1>
-        <form id="exchange-form" class="exchange-container">
-            <div class="from-div">
-                <input id="base-input" name="base-amount" type="number" value="1.00" inputmode="decimal">
-                <select id="base-currency" name="base-currency">
-                    <option value="USD">USD</option>
-                    <option value="CAD">CAD</option>
-                    <option value="GRB">GRB</option>
-                </select>
-            </div>
-            <div class="to-div">
-                <input id="quote-input" name="quote-amount" type="number" inputmode="decimal">
-                <select id="quote-currency" name="quote-currency">
-                    <option value="USD">USD</option>
-                    <option value="CAD">CAD</option>
-                    <option value="GRB">GRB</option>
-                </select>
-            </div>
-            <div class="interest-div">
-                <label>Bank/Card Fee</label>
-                <select id="fee-rate" name="fee-rate">
-                    <option value="0.00">+/- 0%</option>
-                    <option value="0.01">+/- 1%</option>
-                    <option value="0.02">+/- 2%</option>
-                    <option value="0.03">+/- 3%</option>
-                    <option value="0.04">+/- 4%</option>
-                    <option value="0.05">+/- 5%</option>
-                </select>
-            </div>
-            <input hidden id="ex-rate" name="ex-rate" value="" pattern="\d*\.\d*">
-            <input hidden id="time-input" name="time-input" value="">
-        </form>
-        <button class="favorites-button">Add to Favorites</button>
+        <div class="section-content">
+            <form id="exchange-form" class="exchange-container">
+                <div class="input-area">
+                    <label for="base-amount">Currency I Have</label>
+                    <input id="base-amount" name="base-amount" type="number" value="1.00" min="0" max="999999"
+                        inputmode="decimal">
+                    <select id="base-currency" name="base-currency">
+                        <option value="USD">USD</option>
+                        <option value="CAD">CAD</option>
+                        <option value="GRB">GRB</option>
+                    </select>
+                </div>
+                <div class="input-area">
+                    <label for="quote-amount">Currency I Want</label>
+                    <input id="quote-amount" name="quote-amount" type="number" min="0" max="999999" inputmode="decimal">
+                    <select id="quote-currency" name="quote-currency">
+                        <option value="USD">USD</option>
+                        <option value="CAD">CAD</option>
+                        <option value="GRB">GRB</option>
+                    </select>
+                </div>
+                <div class="interest-div">
+                    <label for="fee-rate">Bank/Card Fee</label>
+                    <select id="fee-rate" name="fee-rate">
+                        <option value="0.00">+/- 0%</option>
+                        <option value="0.01">+/- 1%</option>
+                        <option value="0.02">+/- 2%</option>
+                        <option value="0.03">+/- 3%</option>
+                        <option value="0.04">+/- 4%</option>
+                        <option value="0.05">+/- 5%</option>
+                    </select>
+                </div>
+                <input hidden id="ex-rate" name="ex-rate" value="" pattern="\d*\.\d*">
+                <input hidden id="time-input" name="time-input" value="">
+                <button class="favorites-button" type="button">Add to Favorites</button>
+            </form>
+        </div>
+    </section>
+    <section>
+        <h1 class="h1-header">Favorites</h1>
+        <div class="section-content">
+            <table class="favorites">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Base</th>
+                        <th>Fee</th>
+                        <th>Amount</th>
+                        <th>Quote</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-rate=".87">
+                        <td>
+                            <input value="1.00" type="number">
+                        </td>
+                        <td>USD</td>
+                        <td>
+                            <select>
+                                <option value=".00">+/- 0%</option>
+                                <option value=".01">+/- 1%</option>
+                                <option value=".02">+/- 2%</option>
+                                <option value=".03">+/- 3%</option>
+                                <option value=".04">+/- 4%</option>
+                                <option value=".05">+/- 5%</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input readonly value="0.87">
+                        </td>
+                        <td>GBR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 </body>
 
