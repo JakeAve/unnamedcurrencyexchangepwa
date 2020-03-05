@@ -7,26 +7,6 @@ const feeRate = document.querySelector('#fee-rate');
 const exRate = document.querySelector('#ex-rate');
 const timeInput = document.querySelector('#time-input');
 
-exchangeForm.addEventListener('input', async e => {
-    const formObj = readForm();
-    if (e.target === baseCurrency || e.target === quoteCurrency || exRate.value === "") {
-        await setRate(formObj);
-    }
-    calculateAmount(e.target);
-})
-
-function setRate(formObj) {
-    const base = formObj['base-currency'];
-    const quote = formObj['quote-currency'];
-    const url = `/convert/1/${base}/${quote}`;
-    return fetch(url)
-        .then(res => res.json()).then(json => {
-            exRate.value = json.amount;
-            timeInput.value = json.time;
-        })
-        .catch(err => console.log(err))
-}
-
 function readForm() {
     const formData = new FormData(exchangeForm);
     const formObj = {};
@@ -35,6 +15,19 @@ function readForm() {
         formObj[i[0]] = isNaN(number) ? i[1] : number;
     }
     return formObj
+}
+
+function setRate(formObj) {
+    const base = formObj['base-currency'];
+    const quote = formObj['quote-currency'];
+    const url = `/convert/1/${base}/${quote}`;
+    return fetch(url)
+        .then(res => res.json())
+        .then(json => {
+            exRate.value = json.amount;
+            timeInput.value = json.time;
+        })
+        .catch(err => console.error(err))
 }
 
 function calculateAmount(element) {
@@ -48,3 +41,10 @@ function calculateAmount(element) {
         quoteInput.value = newValue.toFixed(2);
     }
 }
+
+exchangeForm.addEventListener('input', async e => {
+    const formObj = readForm();
+    if (e.target === baseCurrency || e.target === quoteCurrency || exRate.value === "")
+        await setRate(formObj);
+    calculateAmount(e.target);
+})
