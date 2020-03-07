@@ -16,7 +16,7 @@
     <meta name="apple-mobile-web-app-status-bar" content="#00A410">
     <meta name="theme-color" content="#00A410">
     <script defer src="./script.js"></script>
-    <script defer src="./app.js"></script>
+    <!-- <script defer src="./app.js"></script> -->
 </head>
 
 <body class="main-body">
@@ -24,42 +24,62 @@
         <h1 class="h1-header">Currency Exchange</h1>
     </header> -->
     <section class="exchange-section">
-        <h1 class="h1-header">Exchange</h1>
+        <!-- <h1 class="h1-header">Exchange</h1> -->
         <div class="section-content">
-            <form id="exchange-form" class="exchange-container">
-                <div class="input-area">
-                    <label for="base-amount">Currency I Have</label>
-                    <input id="base-amount" name="base-amount" type="number" value="1.00" min="0" max="999999"
-                        inputmode="decimal">
-                    <select id="base-currency" name="base-currency">
-                        <option value="USD">USD</option>
-                        <option value="CAD">CAD</option>
-                        <option value="GRB">GRB</option>
-                    </select>
+            <form id="exchange-form" class="exchange-form">
+                <div class="currency-selectors full-width-mobile">
+                    <div class="select-container first">
+                        <select id="base-currency" name="base-currency">
+                            <option value="USD">US Dollars</option>
+                            <option value="CAD">Canadian Dollars</option>
+                            <option value="GRB">Great Britain Pounds</option>
+                        </select>
+                        <span class="select-cover" id="base-currency-span"></span>
+                    </div>
+                    <button aria-label="switch currencies" type="button" class="switch-arrow" id="switch-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path
+                                d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z" />
+                        </svg>
+                    </button>
+                    <div class="select-container second">
+                        <select id="quote-currency" name="quote-currency">
+                            <option value="CAD">Canadian Dollars</option>
+                            <option value="USD">US Dollars</option>
+                            <option value="GRB">Great Britain Pounds</option>
+                        </select>
+                        <span class="select-cover" id="quote-currency-span"></span>
+                    </div>
                 </div>
-                <div class="input-area">
-                    <label for="quote-amount">Currency I Want</label>
-                    <input id="quote-amount" name="quote-amount" type="number" min="0" max="999999" inputmode="decimal">
-                    <select id="quote-currency" name="quote-currency">
-                        <option value="USD">USD</option>
-                        <option value="CAD">CAD</option>
-                        <option value="GRB">GRB</option>
-                    </select>
+                <div class="currency-inputs full-width-mobile">
+                    <div class="currency-input-container full-width-mobile first">
+                        <input class="" id="base-amount" name="base-amount" type="number" value="1.00"
+                            min="0" max="999999" inputmode="decimal">
+                        <label class="currency-label" id="base-label" for="base-currency"></label>
+                    </div>
+                    <div class="currency-input-container full-width-mobile">
+                        <input class="" id="quote-amount" name="quote-amount" type="number" min="0"
+                            max="999999" inputmode="decimal">
+                        <label class="currency-label" id="quote-label" for="quote-currency"></label>
+                    </div>
                 </div>
-                <div class="interest-div">
-                    <label for="fee-rate">Bank/Card Fee</label>
+                <div class="full-width-mobile fee-container">
+                    <label for="fee-rate">Bank or Card Fee:&nbsp;</label>
                     <select id="fee-rate" name="fee-rate">
-                        <option value="0.00">+/- 0%</option>
-                        <option value="0.01">+/- 1%</option>
-                        <option value="0.02">+/- 2%</option>
-                        <option value="0.03">+/- 3%</option>
-                        <option value="0.04">+/- 4%</option>
-                        <option value="0.05">+/- 5%</option>
+                        <option value="0.00">0%</option>
+                        <option value="0.01">1%</option>
+                        <option value="0.02">2%</option>
+                        <option value="0.03">3%</option>
+                        <option value="0.04">4%</option>
+                        <option value="0.05">5%</option>
                     </select>
                 </div>
                 <input hidden id="ex-rate" name="ex-rate" value="" pattern="\d*\.\d*">
                 <input hidden id="time-input" name="time-input" value="">
-                <button class="favorites-button" type="button">Add to Favorites</button>
+                <div class="rate-updated full-width-mobile" id="rate-updated">Exchange rate updated
+                    <span id="rel-time"></span>
+                </div>
+                <button class="favorites-button full-width-mobile" type="button">Add to Favorites</button>
             </form>
         </div>
     </section>
