@@ -47,13 +47,15 @@ function calculateAmount(element) {
     }
 }
 
-exchangeForm.addEventListener('input', async e => {
+async function convertCurrencies(event) {
     const formObj = readForm();
-    displaySelectSpan();
-    if (e.target === baseCurrency || e.target === quoteCurrency || exRate.value === "")
+    updateDisplay();
+    if (event.target === baseCurrency || event.target === quoteCurrency || exRate.value === "")
         await setRate(formObj);
-    calculateAmount(e.target);
-})
+    calculateAmount(event.target);
+}
+
+exchangeForm.addEventListener('input', (e) => convertCurrencies(e));
 
 function makeRelTimeText(lang = document.documentElement.lang) {
     let supportsRelativeTimeFormat;
@@ -104,7 +106,7 @@ function makeRelTimeText(lang = document.documentElement.lang) {
 setInterval(makeRelTimeText, 60 * 1000);
 makeRelTimeText();
 
-function displaySelectSpan() {
+function updateDisplay() {
     const baseCurrName = baseCurrency.querySelector(`[value="${baseCurrency.value}"]`).innerHTML;
     const quoteCurrName = quoteCurrency.querySelector(`[value="${quoteCurrency.value}"]`).innerHTML;
     baseCurrSpan.innerHTML = baseCurrName;
@@ -112,12 +114,15 @@ function displaySelectSpan() {
     baseLabel.innerHTML = `${baseCurrName} (${baseCurrency.value})`;
     const fee = feeRate.value !== "0.00" ? ` - ${feeRate.querySelector(`[value="${feeRate.value}"]`).innerHTML}` : "";
     quoteLabel.innerHTML = `${quoteCurrName} (${quoteCurrency.value})${fee}`;
+    if (fee) {
+        exchangeForm.classList.add('warning');
+    } else exchangeForm.classList.remove('warning');
 }
-displaySelectSpan();
+updateDisplay();
 
 const switchArrow = document.querySelector('#switch-arrow');
 const currencySelectors = document.querySelector('.currency-selectors');
-switchArrow.addEventListener('click', e => {
+function switchBaseAndQuote() {
     currencySelectors.querySelectorAll('.select-container').forEach(el => {
         el.style.animation = "none";
         setTimeout(() => el.style.animation = "");
@@ -127,5 +132,11 @@ switchArrow.addEventListener('click', e => {
     const quote = quoteCurrency.value;
     baseCurrency.value = quote;
     quoteCurrency.value = base;
-    displaySelectSpan();
-})
+    updateDisplay();
+    // const baseAmount = baseInput.value;
+    // const quoteAmount = quoteInput.value;
+    // baseInput.value = quoteAmount;
+    // quoteInput.value = baseAmount;
+}
+switchArrow.addEventListener('click', switchBaseAndQuote);
+
