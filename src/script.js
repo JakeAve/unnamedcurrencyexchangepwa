@@ -72,7 +72,6 @@ class ConversionForm {
     }
 
     revertCurrencies() {
-        console.log(this.lastWorkingBaseCurr, this.lastWorkingQuoteCurr)
         this.baseCurrSel.value = this.lastWorkingBaseCurr;
         this.quoteCurrSel.value = this.lastWorkingQuoteCurr;
         this.updateDisplay();
@@ -216,7 +215,7 @@ class ConversionForm {
                     minute: "numeric",
                     timeZoneName: "long"
                 });
-                text = dateTimeFormat.format(lastTime);
+                text = dateTimeFormat.format(this.timeInput.value);
             }
             this.relTime.innerHTML = text;
         }
