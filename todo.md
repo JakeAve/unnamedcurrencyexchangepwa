@@ -10,6 +10,7 @@
 [] Add dark mode
 [] Seperate scripts.js into different files
 [] Setup dev env with port variable and live refresh
+[] Add linter and maybe formatter
 [] Setup Babel
 [] Setup webpack with 
     [] Babel
