@@ -1,11 +1,10 @@
 {
-  "name": "currency",
+  "name": "unnamed-currency-exchange",
   "version": "0.0.1",
-  "description": "pwa convert currency",
+  "description": "PWA to Convert Currencies",
   "main": "./server/server.js",
   "scripts": {
-    "nodemon": "nodemon ./server/server.js localhost 3000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon ./server/server.js localhost 3000"
   },
   "author": "Jacob Avery",
   "license": "ISC",

@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('src'))
+const options = {
+    setHeaders: res => {
+        res.set('Service-Worker-Allowed', '/');
+    }
+};
 
+app.use(express.static('src', options))
+
+// test calls
 app.get('/convert/1/USD/CAD', (req, res) => {
     const time = new Date().toISOString();
     const amount = 1.32;
