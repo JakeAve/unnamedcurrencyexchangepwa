@@ -1,0 +1,492 @@
+$white: #ffffff;
+$bg-1: #25aa00;
+$bg-2: #197700;
+$bg-3: #219900;
+$bg-4: #5B9A49;
+$color-1: #f5f5f5;
+$warn-color: #fcff60;
+$red: rgb(209, 55, 55);
+$blue: rgb(80, 80, 211);
+$bx-shadow-1: 0px 1px 5px -2px rgba(0, 0, 0, 0.8);
+$bx-shadow-2: 0px 3px 9px -4px rgba(0, 0, 0, 0.8);
+$jaldi: 'Jaldi',
+sans-serif;
+$openSans: 'Open Sans',
+sans-serif;
+
+* {
+    color: $color-1;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+html,
+body {
+    max-width: 100%;
+    // overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    background: $bg-1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+    margin: 0;
+    font-family: $jaldi;
+}
+
+section {
+    box-sizing: border-box;
+    margin-block-end: 2rem;
+}
+
+input,
+select {
+    background: transparent;
+    border: none;
+    color: $color-1;
+    font-family: $openSans;
+    border-radius: 0;
+}
+
+option {
+    background: $bg-4;
+    color: $color-1;
+    font-family: $openSans;
+
+    &:active {
+        background: $bg-2;
+    }
+}
+
+label {
+    color: $color-1;
+    font-family: $openSans;
+}
+
+.btn-primary {
+    background-color: $color-1;
+    border: 2px solid $color-1;
+    font-family: 'Jaldi', sans-serif;
+    display: block;
+    color: $bg-1;
+    border-radius: 8px;
+    box-shadow: $bx-shadow-1;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover,
+    &:focus {
+        background-color: $bg-4;
+        color: $white;
+        outline: none;
+    }
+
+    &:active {
+        background-color: $bg-4;
+        color: $white;
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+.h1-header {
+    padding: .5rem;
+    font-size: 2rem;
+    color: $color-1;
+}
+
+.switch-arrow {
+    all: unset;
+    transition: transform .5s ease-in-out;
+    cursor: pointer;
+
+    & svg {
+        height: 50px;
+        fill: currentColor;
+    }
+
+    &:focus {
+        background-color: $bg-4;
+    }
+}
+
+.animate-switch .switch-arrow {
+    transform: rotate(360deg);
+}
+
+.exchange-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 15% 50% 15% 10% 10%;
+    justify-items: stretch;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0;
+    height: 90vh;
+    overflow: visible;
+    padding-bottom: 1rem;
+    box-shadow: $bx-shadow-2;
+}
+
+.full-width-mobile {
+    grid-column: 1 / span 2;
+}
+
+.currency-selectors {
+    display: grid;
+    grid-template: auto / 1fr auto 1fr;
+    justify-items: stretch;
+    align-items: stretch;
+    gap: 0 1rem;
+    background-color: $bg-2;
+    box-shadow: $bx-shadow-1;
+    z-index: 1;
+    position: sticky;
+    top: 0;
+    margin-top: env(safe-area-inset-top, 0);
+}
+
+.select-container {
+    position: relative;
+}
+
+@keyframes switch-up {
+    0% {
+        transform: translateY(0vw);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    51% {
+        transform: translateY(100%)
+    }
+
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.select-container.first {
+    animation: switch-up .5s ease-in-out 1 reverse;
+}
+
+.select-container.second {
+    animation: switch-up .5s ease-in-out 1;
+}
+
+.animate-switch .select-container.first {
+    animation: switch-up .5s ease-in-out 1;
+}
+
+.animate-switch .select-container.second {
+    animation: switch-up .5s ease-in-out 1 reverse;
+}
+
+.select-container:focus-within {
+    background-color: $bg-4;
+}
+
+.select-cover {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    padding: .25rem .5rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.select-container select {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    appearance: none;
+    font-size: 1rem;
+    color: transparent;
+}
+
+.select-container select:focus {
+    outline: none;
+}
+
+.select-container option {
+    text-align-last: center;
+    text-align: center;
+    position: absolute;
+}
+
+.currency-inputs {
+    display: grid;
+    align-items: stretch;
+    background: $bg-3;
+}
+
+.currency-input-container {
+    position: relative;
+}
+
+.currency-input-container::before {
+    content: "";
+    background: $bg-4;
+    box-shadow: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0%;
+    width: 0%;
+    transition: height .2s linear, width .3s linear;
+}
+
+.currency-input-container:focus-within::before {
+    height: 100%;
+    width: 100%;
+    box-shadow: inset $bx-shadow-2;
+}
+
+.currency-input-container.first {
+    border-bottom: solid 2px $color-1;
+}
+
+.currency-input-container input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    font-size: 2.2rem;
+    padding: 1.5rem 1rem 2.5rem 1rem;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.currency-input-container input:focus {
+    outline: none;
+}
+
+.currency-label {
+    position: absolute;
+    right: .5rem;
+    bottom: .25rem;
+    opacity: .6;
+    font-size: 1rem;
+}
+
+.fee-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fee-container.main label,
+.fee-container.main select {
+    font-size: 1.1rem;
+}
+
+.rate-updated {
+    font-size: .8rem;
+    padding: 0 10%;
+    text-align: center;
+    align-self: center;
+}
+
+.rate-updated span {
+    font-size: .8rem;
+}
+
+.warning .fee-container label,
+.warning .fee-container select,
+.warning .currency-input-container.second input,
+.warning.favorite-form input:nth-of-type(2) {
+    color: $warn-color;
+    font-style: italic;
+}
+
+.favorites-button {
+    // position: relative;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    width: 95%;
+}
+
+.favorites-section {
+    & p {
+        padding: 0 .5rem;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+.favorites-grid {
+    // display: grid;
+    // grid-template-columns: 1fr;
+    // grid-auto-rows: 1fr;
+    // padding: 0 1rem;
+    // gap: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    & .favorite-form-container+p {
+        display: none;
+    }
+}
+
+.favorite-form-container {
+    margin: 1rem;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    border-radius: 8px;
+    max-height: 250px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &>* {
+        scroll-snap-align: start;
+    }
+
+    &.fade-away {
+        opacity: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+        transition: .2s ease-out;
+    }
+}
+
+.fav-delete,
+.fav-move {
+    flex: 1 0 30%;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.fav-delete {
+    background-color: $red;
+}
+
+.fav-move {
+    background-color: $blue;
+}
+
+.favorite-form {
+    flex: 1 0 100%;
+    position: relative;
+    display: grid;
+    grid-template: auto / 60% auto;
+    gap: 1rem 1rem;
+    background: $bg-3;
+    padding: 1rem;
+    box-sizing: border-box;
+    box-shadow: $bx-shadow-1;
+
+    & input {
+        border-bottom: 1px solid $color-1;
+        font-size: 1.2rem;
+        padding: .2rem .5rem;
+
+        &:focus {
+            outline: none;
+            background: $bg-4;
+        }
+    }
+
+    & .fee-container,
+    & .rate-updated {
+        grid-column: 1 / span 2;
+    }
+
+    & select {
+        font-size: 1rem;
+    }
+
+    .use-favorite {
+        position: absolute;
+        bottom: .5rem;
+        right: .5rem;
+        color: $bg-1;
+        font-family: 'Jaldi', sans-serif;
+        font-weight: bolder;
+        padding: .1rem .6rem;
+        border-radius: 8px;
+        border: 1px solid $color-1;
+        background-color: $color-1;
+    }
+}
+
+.move-grid {
+    display: none;
+
+    &.show {
+        position: fixed;
+        touch-action: none;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
+        display: grid;
+        grid-template: repeat(6, 20vw) / repeat(4, 20vw);
+        justify-items: center;
+        align-items: center;
+        justify-content: space-around;
+        align-content: space-around;
+
+        backdrop-filter: blur(5px);
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    & .move-item {
+        color: $white;
+        background-color: $bg-3;
+        border: 2px solid $white;
+        border-radius: 8px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $bx-shadow-1;
+
+        &.selected {
+            color: $bg-4;
+            background-color: $white;
+            border-color: $bg-4;
+            box-shadow: $bx-shadow-2;
+        }
+
+        &.moving {
+            position: absolute;
+        }
+    }
+
+    & .move-close {
+        grid-row: 6;
+        grid-column: 1 / span 4;
+        width: 100%;
+        font-size: 1.3rem;
+    }
+}

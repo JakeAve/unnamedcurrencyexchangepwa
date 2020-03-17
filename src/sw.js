@@ -3,12 +3,13 @@ const staticAssets = [
     "/",
     "./index.html",
     "./styles.css",
-    "./app.js",
-    "./script.js",
+    "./main.js",
     "https://fonts.googleapis.com/css?family=Jaldi|Open+Sans&display=swap",
     "https://fonts.gstatic.com/s/jaldi/v6/or3sQ67z0_CI33NTbJHdBLg9.woff2",
     "https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2",
     "./manifest.json",
+    "/assets/icons/16x16.png",
+    "/assets/icons/32x32.png",
     "/assets/icons/72x72.png",
     "/assets/icons/96x96.png",
     "/assets/icons/128x128.png",
@@ -56,7 +57,13 @@ self.addEventListener('fetch', e => {
                     caches.open(conversionLabel)
                         .then(cache => cache.put(e.request, resClone));
                     return res
-                }).catch(err => ({status: 503, response: err}))
+                }).catch(err => {
+                    const init = {
+                        status: 503,
+                        statusText: "Offline"
+                    }
+                    return new Response(JSON.stringify(err), init);
+                })
         })
     )
 })

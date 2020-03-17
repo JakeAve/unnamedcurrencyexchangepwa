@@ -15,8 +15,7 @@
     <link rel="apple-touch-icon" href="./assets/icons/96x96.png">
     <meta name="apple-mobile-web-app-status-bar" content="#00A410">
     <meta name="theme-color" content="#00A410">
-    <script defer src="./script.js"></script>
-    <script defer src="./app.js"></script>
+    <script defer src="./main.js"></script>
 </head>
 
 <body class="main-body">
@@ -79,12 +78,15 @@
             <div class="rate-updated full-width-mobile" id="rate-updated">Exchange rate updated
                 <span id="rel-time" rel-time></span>
             </div>
-            <button id="add-to-fav" class="favorites-button full-width-mobile" type="button">Add to Favorites</button>
+            <button id="add-to-fav" class="btn-primary favorites-button full-width-mobile" type="button">Add to Favorites</button>
         </form>
     </section>
-    <section>
+    <section id="favorites-section" class="favorites-section">
         <h1 class="h1-header">Favorites</h1>
-        <div id="favorites-grid" class="favorites-grid"></div>
+        <div id="favorites-grid" class="favorites-grid">
+            <p id="no-favorites-msg">You don't have any favorites added.</p>
+        </div>
+        <div id="move-grid" class="move-grid"></div>
     </section>
 </body>
 

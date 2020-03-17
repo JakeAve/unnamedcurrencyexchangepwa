@@ -4,13 +4,29 @@
   "description": "PWA to Convert Currencies",
   "main": "./server/server.js",
   "scripts": {
-    "dev": "nodemon ./server/server.js localhost 3000"
+    "build": "webpack",
+    "dev:server": "nodemon ./server/server.js localhost 3000",
+    "dev:build": "webpack --watch"
   },
   "author": "Jacob Avery",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "babel-loader": "^8.0.5",
+    "babel-preset-minify": "^0.5.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.2",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2"
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-extraneous-file-cleanup-plugin": "^2.0.0"
   }
 }
