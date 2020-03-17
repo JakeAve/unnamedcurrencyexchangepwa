@@ -5,7 +5,7 @@ A progressive web app designed to help people know currency conversion rates whi
 ## Setup
 
 - Clone the repo
-- `npm run dev`
-- Navigate to `localhost:3000/`
+- `npm run build`
+- `npm run dev:server`
 
 If service worker does not intercept the fetch requests, add a slash to the url
