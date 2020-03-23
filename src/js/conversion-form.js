@@ -1,192 +1,192 @@
-import { getRate } from "./api-calls";
-const favoritesGrid = document.querySelector("#favorites-grid");
+import { getRate } from './api-calls'
+const favoritesGrid = document.querySelector('#favorites-grid')
 
 export default class ConversionForm {
-  constructor({ formEl, id, base, quote, rate = "", time = "" }) {
+  constructor({ formEl, id, base, quote, rate = '', time = '' }) {
     if (!formEl) {
-      this.createFormEl(id, base, quote, rate, time);
-      this.base = base;
-      this.quote = quote;
-      this.lastWorkingBaseCurr = base.short;
-      this.lastWorkingQuoteCurr = quote.short;
-    } else this.formEl = formEl;
-    this.id = id || "main";
+      this.createFormEl(id, base, quote, rate, time)
+      this.base = base
+      this.quote = quote
+      this.lastWorkingBaseCurr = base.short
+      this.lastWorkingQuoteCurr = quote.short
+    } else this.formEl = formEl
+    this.id = id || 'main'
 
-    this.baseCurrSel = this.formEl.querySelector("[base-currency]");
-    this.baseSelCover = this.formEl.querySelector("[base-sel-cover]");
-    this.baseLabel = this.formEl.querySelector("[base-label]");
-    this.baseInput = this.formEl.querySelector("[base-input]");
+    this.baseCurrSel = this.formEl.querySelector('[base-currency]')
+    this.baseSelCover = this.formEl.querySelector('[base-sel-cover]')
+    this.baseLabel = this.formEl.querySelector('[base-label]')
+    this.baseInput = this.formEl.querySelector('[base-input]')
 
-    this.quoteCurrSel = this.formEl.querySelector("[quote-currency]");
-    this.quoteSelCover = this.formEl.querySelector("[quote-sel-cover]");
-    this.quoteLabel = this.formEl.querySelector("[quote-label]");
-    this.quoteInput = this.formEl.querySelector("[quote-input]");
+    this.quoteCurrSel = this.formEl.querySelector('[quote-currency]')
+    this.quoteSelCover = this.formEl.querySelector('[quote-sel-cover]')
+    this.quoteLabel = this.formEl.querySelector('[quote-label]')
+    this.quoteInput = this.formEl.querySelector('[quote-input]')
 
-    this.feeRate = this.formEl.querySelector("[fee-rate]");
-    this.exRate = this.formEl.querySelector("[ex-rate]");
-    this.timeInput = this.formEl.querySelector("[time-input]");
-    this.relTime = this.formEl.querySelector("[rel-time]");
+    this.feeRate = this.formEl.querySelector('[fee-rate]')
+    this.exRate = this.formEl.querySelector('[ex-rate]')
+    this.timeInput = this.formEl.querySelector('[time-input]')
+    this.relTime = this.formEl.querySelector('[rel-time]')
 
-    this.formEl.addEventListener("input", e => this.convertCurrencies(e));
+    this.formEl.addEventListener('input', e => this.convertCurrencies(e))
 
-    setInterval(() => this.makeRelTimeText(), 60 * 1000);
+    setInterval(() => this.makeRelTimeText(), 60 * 1000)
 
-    this.convertCurrencies();
+    this.convertCurrencies()
   }
 
   revertCurrencies() {
-    this.baseCurrSel.value = this.lastWorkingBaseCurr;
-    this.quoteCurrSel.value = this.lastWorkingQuoteCurr;
-    this.updateDisplay();
+    this.baseCurrSel.value = this.lastWorkingBaseCurr
+    this.quoteCurrSel.value = this.lastWorkingQuoteCurr
+    this.updateDisplay()
   }
 
   get baseName() {
-    if (this.base) return this.base.long;
+    if (this.base) return this.base.long
     else
       return this.baseCurrSel.querySelector(
         `[value="${this.baseCurrSel.value}"]`
-      ).innerHTML;
+      ).innerHTML
   }
 
   get quoteName() {
-    if (this.quote) return this.quote.long;
+    if (this.quote) return this.quote.long
     else
       return this.quoteCurrSel.querySelector(
         `[value="${this.quoteCurrSel.value}"]`
-      ).innerHTML;
+      ).innerHTML
   }
 
   readForm() {
-    const formData = new FormData(this.formEl);
-    const formObj = {};
+    const formData = new FormData(this.formEl)
+    const formObj = {}
     for (let i of formData) {
-      const number = Number(i[1]);
-      formObj[i[0]] = isNaN(number) ? i[1] : number;
+      const number = Number(i[1])
+      formObj[i[0]] = isNaN(number) ? i[1] : number
     }
-    return formObj;
+    return formObj
   }
 
   updateDisplay() {
     const fee =
-      this.feeRate.value !== "0.00"
+      this.feeRate.value !== '0.00'
         ? ` - ${
             this.feeRate.querySelector(`[value="${this.feeRate.value}"]`)
               .innerHTML
           }`
-        : "";
+        : ''
     if (this.baseSelCover && this.quoteSelCover) {
-      this.baseSelCover.innerHTML = this.baseName;
-      this.quoteSelCover.innerHTML = this.quoteName;
-      this.baseLabel.innerHTML = this.baseName;
-      this.quoteLabel.innerHTML = this.quoteName + fee;
+      this.baseSelCover.innerHTML = this.baseName
+      this.quoteSelCover.innerHTML = this.quoteName
+      this.baseLabel.innerHTML = this.baseName
+      this.quoteLabel.innerHTML = this.quoteName + fee
     }
-    if (fee) this.formEl.classList.add("warning");
-    else this.formEl.classList.remove("warning");
+    if (fee) this.formEl.classList.add('warning')
+    else this.formEl.classList.remove('warning')
   }
 
   setRate(formObj) {
-    const base = formObj["base-currency"];
-    const quote = formObj["quote-currency"];
+    const base = formObj['base-currency']
+    const quote = formObj['quote-currency']
     return getRate(base, quote)
       .then(({ rate, time }) => {
-        this.exRate.value = rate;
-        this.timeInput.value = time;
-        this.lastWorkingBaseCurr = this.baseCurrSel.value;
-        this.lastWorkingQuoteCurr = this.quoteCurrSel.value;
-        this.makeRelTimeText();
+        this.exRate.value = rate
+        this.timeInput.value = time
+        this.lastWorkingBaseCurr = this.baseCurrSel.value
+        this.lastWorkingQuoteCurr = this.quoteCurrSel.value
+        this.makeRelTimeText()
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
   }
 
   calculateAmount(element) {
-    const formObj = this.readForm();
-    const isQuote = element === this.quoteInput;
+    const formObj = this.readForm()
+    const isQuote = element === this.quoteInput
     if (isQuote) {
       const newValue =
-        (formObj["quote-amount"] / formObj["ex-rate"]) *
-        (1 - formObj["fee-rate"]);
-      this.baseInput.value = newValue.toFixed(2);
+        (formObj['quote-amount'] / formObj['ex-rate']) *
+        (1 - formObj['fee-rate'])
+      this.baseInput.value = newValue.toFixed(2)
     } else {
       const newValue =
-        formObj["base-amount"] * formObj["ex-rate"] * (1 - formObj["fee-rate"]);
-      this.quoteInput.value = newValue.toFixed(2);
+        formObj['base-amount'] * formObj['ex-rate'] * (1 - formObj['fee-rate'])
+      this.quoteInput.value = newValue.toFixed(2)
     }
   }
 
   async convertCurrencies(event = {}) {
-    const { target = null } = event;
-    const formObj = this.readForm();
-    this.updateDisplay();
-    const noTarget = !target;
+    const { target = null } = event
+    const formObj = this.readForm()
+    this.updateDisplay()
+    const noTarget = !target
     const newRateRequired =
       target === this.baseCurrSel ||
       target === this.quoteCurrSel ||
-      this.exRate.value === "";
+      this.exRate.value === ''
     if (noTarget || newRateRequired) {
       await this.setRate(formObj).catch(() => {
-        this.revertCurrencies();
+        this.revertCurrencies()
         if (!navigator.onLine) {
-          alert("Your device is offline and cannot get this currency exchange");
+          alert('Your device is offline and cannot get this currency exchange')
         }
-      });
+      })
     }
-    this.calculateAmount(target);
+    this.calculateAmount(target)
   }
 
   get elapsedTime() {
     if (this.timeInput.value) {
-      const lastTime = new Date(this.timeInput.value);
-      const now = new Date();
-      return now - lastTime;
-    } else "";
+      const lastTime = new Date(this.timeInput.value)
+      const now = new Date()
+      return now - lastTime
+    } else ''
   }
 
   makeRelTimeText(lang = document.documentElement.lang) {
-    let supportsRelativeTimeFormat;
+    let supportsRelativeTimeFormat
     try {
       supportsRelativeTimeFormat =
-        Intl.RelativeTimeFormat.supportedLocalesOf(lang).length > 0;
+        Intl.RelativeTimeFormat.supportedLocalesOf(lang).length > 0
     } catch {
-      supportsRelativeTimeFormat = false;
+      supportsRelativeTimeFormat = false
     }
-    const timeDiff = this.elapsedTime;
+    const timeDiff = this.elapsedTime
     if (timeDiff) {
       // if (timeDiff > 24 * 60 * 60 * 1000) {
       //     this.convertCurrencies()
       // }
 
-      let text = "";
+      let text = ''
       if (supportsRelativeTimeFormat) {
         const relTimeFormat = new Intl.RelativeTimeFormat([lang], {
-          numeric: "auto",
-          style: "long"
-        });
-        let value, unit;
+          numeric: 'auto',
+          style: 'long'
+        })
+        let value, unit
         if (timeDiff < 60 * 1000) {
-          unit = "second";
-          value = timeDiff / 1000;
+          unit = 'second'
+          value = timeDiff / 1000
         } else if (timeDiff < 60 * 60 * 1000) {
-          unit = "minute";
-          value = timeDiff / (60 * 1000);
+          unit = 'minute'
+          value = timeDiff / (60 * 1000)
         } else if (timeDiff < 24 * 60 * 60 * 1000) {
-          unit = "hour";
-          value = timeDiff / (60 * 60 * 1000);
+          unit = 'hour'
+          value = timeDiff / (60 * 60 * 1000)
         } else {
-          unit = "day";
-          value = timeDiff / (24 * 60 * 60 * 1000);
+          unit = 'day'
+          value = timeDiff / (24 * 60 * 60 * 1000)
         }
-        text = relTimeFormat.format(-value.toFixed(), unit);
+        text = relTimeFormat.format(-value.toFixed(), unit)
       } else {
         const dateTimeFormat = new Intl.DateTimeFormat([lang], {
-          day: "numeric",
-          month: "short",
-          hour: "numeric",
-          minute: "numeric",
-          timeZoneName: "long"
-        });
-        text = dateTimeFormat.format(new Date(this.timeInput.value));
+          day: 'numeric',
+          month: 'short',
+          hour: 'numeric',
+          minute: 'numeric',
+          timeZoneName: 'long'
+        })
+        text = dateTimeFormat.format(new Date(this.timeInput.value))
       }
-      this.relTime.innerHTML = text;
+      this.relTime.innerHTML = text
     }
   }
 
@@ -222,13 +222,13 @@ export default class ConversionForm {
     </form>
     <button id="move-btn-${id}" class="fav-move" move-btn>Move</button>
     <button id="delete-btn-${id}" class="fav-delete" delete-btn>Delete</button>
-    `;
-    const container = document.createElement("div");
-    container.classList.add("favorite-form-container");
-    container.setAttribute("favorite-id", id);
-    container.innerHTML = innerHTML;
+    `
+    const container = document.createElement('div')
+    container.classList.add('favorite-form-container')
+    container.setAttribute('favorite-id', id)
+    container.innerHTML = innerHTML
     // form.draggable = true;
-    favoritesGrid.prepend(container);
-    this.formEl = container.querySelector("form");
+    favoritesGrid.prepend(container)
+    this.formEl = container.querySelector('form')
   }
 }

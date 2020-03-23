@@ -12,7 +12,7 @@
 - [ ] Seperate ConversionForm and Favorite classes
 - [x] Seperate scripts.js into different files
 - [ ] Setup dev env with port variable and live refresh
-- [ ] Add linter and maybe formatter
+- [x] Add linter and maybe formatter
 - [x] Setup Babel
 - [x] Setup webpack with 
     - [x] Babel
