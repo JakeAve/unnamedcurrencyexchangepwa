@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Convert currencies and save the conversion rate while you are traveling.">
     <title>Currency Exchange</title>
     <link rel="stylesheet" href="./styles.css">
     <link href="https://fonts.googleapis.com/css?family=Jaldi|Open+Sans&display=swap" rel="stylesheet">
@@ -19,33 +20,29 @@
 </head>
 
 <body class="main-body">
-    <!-- <header class="main-header">
-        <h1 class="h1-header">Currency Exchange</h1>
-    </header> -->
     <section class="exchange-section">
-        <!-- <h1 class="h1-header">Exchange</h1> -->
         <form id="exchange-form" class="exchange-form">
             <div class="currency-selectors full-width-mobile">
                 <div class="select-container first">
-                    <select id="base-currency" name="base-currency" base-currency>
+                    <select id="base-currency" class="currency-select" name="base-currency" base-currency>
                         <option value="USD">US Dollars (USD)</option>
                         <option value="CAD">Canadian Dollars (CAD)</option>
-                        <option value="GRB">Great Britain Pounds (GRB)</option>
+                        <option value="GBP">Great Britain Pounds (GBP)</option>
                     </select>
                     <span class="select-cover" id="base-currency-span" base-sel-cover></span>
                 </div>
                 <button aria-label="switch currencies" type="button" class="switch-arrow" id="switch-arrow"
                     switch-arrow>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                         <path
-                            d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z" />
-                    </svg>
+                            d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z" />
+                        </svg>
                 </button>
                 <div class="select-container second">
-                    <select id="quote-currency" name="quote-currency" quote-currency>
+                    <select id="quote-currency" class="currency-select" name="quote-currency" quote-currency>
                         <option value="CAD">Canadian Dollars (CAD)</option>
                         <option value="USD">US Dollars (USD)</option>
-                        <option value="GRB">Great Britain Pounds (GBR)</option>
+                        <option value="GBP">Great Britain Pounds (GBP)</option>
                     </select>
                     <span class="select-cover" id="quote-currency-span" quote-sel-cover></span>
                 </div>
@@ -78,7 +75,8 @@
             <div class="rate-updated full-width-mobile" id="rate-updated">Exchange rate updated
                 <span id="rel-time" rel-time></span>
             </div>
-            <button id="add-to-fav" class="btn-primary favorites-button full-width-mobile" type="button">Add to Favorites</button>
+            <button id="add-to-fav" class="btn-primary favorites-button full-width-mobile" type="button">Add to
+                Favorites</button>
         </form>
     </section>
     <section id="favorites-section" class="favorites-section">

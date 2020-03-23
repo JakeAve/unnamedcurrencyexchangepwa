@@ -1,13 +1,16 @@
 {
-    "presets": [
-        ["@babel/env", {
-            "targets": {
-                "chrome": "55",
-                "ios": "11"
-            }
-        }],
-        "minify"
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "chrome": "55",
+          "ios": "11"
+        }
+      }
     ],
-    "plugins": [],
-    "ignore": ["sw.js"]
+    "minify"
+  ],
+  "plugins": [],
+  "ignore": ["sw.js"]
 }

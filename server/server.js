@@ -7,7 +7,7 @@ const options = {
     }
 };
 
-app.use(express.static('build', options))
+app.use(express.static('dist', options))
 
 // test calls
 app.get('/convert/1/USD/CAD', (req, res) => {

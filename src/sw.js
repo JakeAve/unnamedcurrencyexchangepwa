@@ -21,6 +21,7 @@ const staticAssets = [
 ];
 
 const conversionLabel = "conversions";
+const conversionApi = "api.exchangeratesapi.io";
 
 self.addEventListener('install', e => {
     // console.log('installed', e);
@@ -42,7 +43,6 @@ self.addEventListener('activate', e => {
 })
 
 self.addEventListener('fetch', e => {
-    // console.log('fetched', e);
     e.respondWith(
         caches.match(e.request)
         .then(cacheRes => {
@@ -51,11 +51,13 @@ self.addEventListener('fetch', e => {
             }
             return fetch(e.request)
                 .then(res => {
-                    if (!res || res.status !== 200 || res.type !== 'basic')
+                    if (!res || res.status !== 200)
                         return res
-                    const resClone = res.clone();
-                    caches.open(conversionLabel)
-                        .then(cache => cache.put(e.request, resClone));
+                    if (new URL(res.url).hostname === conversionApi) {
+                        const resClone = res.clone();
+                        caches.open(conversionLabel)
+                            .then(cache => cache.put(e.request, resClone));
+                    }
                     return res
                 }).catch(err => {
                     const init = {
