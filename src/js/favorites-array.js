@@ -1,4 +1,4 @@
-import ConversionForm from './conversion-form'
+import IndividualFavorite from './individual-favorite'
 const favoritesGrid = document.querySelector('#favorites-grid')
 
 export function localStorageAvailable() {
@@ -19,7 +19,7 @@ const favorites =
 favorites.renderForms = () =>
   favorites.reverse().map(
     fav =>
-      new ConversionForm({
+      new IndividualFavorite({
         ...fav
       })
   )
@@ -43,5 +43,7 @@ favorites.save = () => {
       `You need to enable "localStorage" for this site in your web browser to save a favorite.`
     )
 }
+
+// window.addEventListener('beforeunload', () => favorites.save())
 
 export default favorites

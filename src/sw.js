@@ -24,14 +24,12 @@ const conversionLabel = 'conversions'
 const conversionApi = 'api.exchangeratesapi.io'
 
 self.addEventListener('install', e => {
-  // console.log('installed', e);
   e.waitUntil(
     caches.open(staticLabel).then(cache => cache.addAll(staticAssets))
   )
 })
 
 self.addEventListener('activate', e => {
-  // console.log('activated', e);
   e.waitUntil(
     caches
       .keys()

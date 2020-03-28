@@ -1,3 +1,11 @@
+// $bg-1: #505050;
+// $bg-2: #202020;
+// $bg-3: #303030;
+// $bg-4: #838383;
+// $color-1: #f5f5f5;
+// $warn-color: #fcff60;
+// $red: rgb(209, 55, 55);
+// $blue: rgb(80, 80, 211);
 $bg-1: #25aa00;
 $bg-2: #197700;
 $bg-3: #219900;
@@ -450,6 +458,7 @@ label {
     justify-content: space-around;
     align-content: space-around;
 
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     z-index: 1;
     overflow: hidden;

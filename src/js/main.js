@@ -1,74 +1,48 @@
 import serviceWorker from './app.js'
-
 serviceWorker()
 
 import ConversionForm from './conversion-form'
+import IndividualFavorite from './individual-favorite'
 import favorites, { localStorageAvailable } from './favorites-array'
 import moveFavorite from './move-grid'
 import randomId from './random-id'
 import createCurrencyOptions from './create-currency-options'
+import smoothScrollTo from './smooth-scroll-to'
 
-function smoothScrollTo(el, options = {}) {
-  const { inline = 'nearest', block = 'start', behavior = 'smooth' } = options
-  try {
-    // killBill()
-    el.scrollIntoView({
-      inline,
-      block,
-      behavior
-    })
-  } catch {
-    const pageOffSet = window.pageYOffset || document.scrollTop
-    const elOffSet = () => el.getBoundingClientRect().top + pageOffSet
-    const direction = elOffSet() < pageOffSet ? -1 : 1
-    const fakeSmooth = setInterval(() => {
-      const value = elOffSet()
-      if (Math.abs(value > 10)) {
-        window.scrollBy(0, 10 * direction)
-      } else clearInterval(fakeSmooth)
-    }, 10)
-  }
-}
-
-const mainConverter = new ConversionForm({
-  formEl: document.querySelector('#exchange-form')
-})
+const mainConverter = new ConversionForm(
+  document.querySelector('#exchange-form')
+)
 
 const addToFavoritesBtn = mainConverter.formEl.querySelector('#add-to-fav')
 addToFavoritesBtn.addEventListener('click', createNewFavorite)
 
 function createNewFavorite() {
   const id = randomId()
-  const base = {
-    long: mainConverter.baseName,
-    short: mainConverter.baseCurrSel.value
-  }
-  const quote = {
-    long: mainConverter.quoteName,
-    short: mainConverter.quoteCurrSel.value
-  }
-  const rate = mainConverter.exRate.value
+  const base = mainConverter.baseCurrency.value
+  const baseAmount = mainConverter.baseInput.value
+  const quote = mainConverter.quoteCurrency.value
+  const exRate = mainConverter.exRate.value
   const time = mainConverter.timeInput.value
+  const feeRate = mainConverter.feeRate.value
 
-  let alreadyExists = false
-  favorites.forms.forEach(c => {
-    if (c.baseName === base.long && c.quoteName === quote.long) {
-      alreadyExists = c
-    }
-  })
+  const alreadyExists = favorites.forms.find(
+    c => c.base === base && c.quote === quote
+  )
 
   if (!alreadyExists && favorites.length < 20) {
     const favorite = {
       id,
       base,
+      baseAmount,
       quote,
-      rate,
+      exRate,
+      feeRate,
       time
     }
     favorites.unshift(favorite)
     favorites.save()
     favorites.forms.unshift(
-      new ConversionForm({
+      new IndividualFavorite({
         ...favorite
       })
     )
@@ -135,12 +109,12 @@ function switchBaseAndQuote() {
     setTimeout(() => (el.style.animation = ''))
   })
   currencySelectors.classList.toggle('animate-switch')
-  const baseCurr = mainConverter.baseCurrSel.value
-  const quoteCurr = mainConverter.quoteCurrSel.value
-  mainConverter.baseCurrSel.value = quoteCurr
-  mainConverter.quoteCurrSel.value = baseCurr
+  const baseCurr = mainConverter.baseCurrency.value
+  const quoteCurr = mainConverter.quoteCurrency.value
+  mainConverter.baseCurrency.value = quoteCurr
+  mainConverter.quoteCurrency.value = baseCurr
   // setTimeout(() => mainConverter.convertCurrencies());
   mainConverter.convertCurrencies()
 }
 
-createCurrencyOptions().then(() => mainConverter.updateDisplay())
+createCurrencyOptions().then(() => mainConverter.convertCurrencies())

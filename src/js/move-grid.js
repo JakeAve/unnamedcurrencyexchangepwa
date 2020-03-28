@@ -16,7 +16,7 @@ export default function moveFavorite(btn, currentFavorites) {
   const blocks = currentFavorites
     .map(
       f =>
-        `<div favorite-id="${f.id}" class="move-item">${f.base.short}<br>${f.quote.short}</div>`
+        `<div favorite-id="${f.id}" class="move-item">${f.base}<br>${f.quote}</div>`
     )
     .join('')
   moveGrid.innerHTML =

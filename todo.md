@@ -7,9 +7,11 @@
 - [x] Recalculate `convert` urls with 1,000 or 10,000 instead of 1
 - [ ] Finalize design
 - [ ] Add loading indicator(s)
+- [x] Enable saving values when saving to favorites
 - [x] Convert CSS to SASS so I don't go crazy
 - [ ] Add dark mode
-- [ ] Seperate ConversionForm and Favorite classes
+- [x] Seperate ConversionForm and Favorite classes
+- [ ] Update favorites form and favorites array
 - [x] Seperate scripts.js into different files
 - [ ] Setup dev env with port variable and live refresh
 - [x] Add linter and maybe formatter

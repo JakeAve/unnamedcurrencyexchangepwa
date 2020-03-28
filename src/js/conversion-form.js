@@ -1,23 +1,16 @@
 import { getRate } from './api-calls'
-const favoritesGrid = document.querySelector('#favorites-grid')
+import currencies from './currencies'
 
 export default class ConversionForm {
-  constructor({ formEl, id, base, quote, rate = '', time = '' }) {
-    if (!formEl) {
-      this.createFormEl(id, base, quote, rate, time)
-      this.base = base
-      this.quote = quote
-      this.lastWorkingBaseCurr = base.short
-      this.lastWorkingQuoteCurr = quote.short
-    } else this.formEl = formEl
-    this.id = id || 'main'
+  constructor(formEl) {
+    this.formEl = formEl
 
-    this.baseCurrSel = this.formEl.querySelector('[base-currency]')
+    this.baseCurrency = this.formEl.querySelector('[base-currency]')
     this.baseSelCover = this.formEl.querySelector('[base-sel-cover]')
     this.baseLabel = this.formEl.querySelector('[base-label]')
     this.baseInput = this.formEl.querySelector('[base-input]')
 
-    this.quoteCurrSel = this.formEl.querySelector('[quote-currency]')
+    this.quoteCurrency = this.formEl.querySelector('[quote-currency]')
     this.quoteSelCover = this.formEl.querySelector('[quote-sel-cover]')
     this.quoteLabel = this.formEl.querySelector('[quote-label]')
     this.quoteInput = this.formEl.querySelector('[quote-input]')
@@ -29,31 +22,27 @@ export default class ConversionForm {
 
     this.formEl.addEventListener('input', e => this.convertCurrencies(e))
 
-    setInterval(() => this.makeRelTimeText(), 60 * 1000)
-
-    this.convertCurrencies()
+    setInterval(() => this.makeRelTimeText(), 60 * 60 * 1000)
   }
 
   revertCurrencies() {
-    this.baseCurrSel.value = this.lastWorkingBaseCurr
-    this.quoteCurrSel.value = this.lastWorkingQuoteCurr
+    this.baseCurrency.value = this.lastWorkingBaseCurr
+    this.quoteCurrency.value = this.lastWorkingQuoteCurr
     this.updateDisplay()
   }
 
   get baseName() {
-    if (this.base) return this.base.long
-    else
-      return this.baseCurrSel.querySelector(
-        `[value="${this.baseCurrSel.value}"]`
-      ).innerHTML
+    const longName = currencies.find(
+      c => this.baseCurrency.value === c.currencyCode
+    ).longName
+    return `${longName} (${this.baseCurrency.value})`
   }
 
   get quoteName() {
-    if (this.quote) return this.quote.long
-    else
-      return this.quoteCurrSel.querySelector(
-        `[value="${this.quoteCurrSel.value}"]`
-      ).innerHTML
+    const longName = currencies.find(
+      c => this.quoteCurrency.value === c.currencyCode
+    ).longName
+    return `${longName} (${this.quoteCurrency.value})`
   }
 
   readForm() {
@@ -91,8 +80,8 @@ export default class ConversionForm {
       .then(({ rate, time }) => {
         this.exRate.value = rate
         this.timeInput.value = time
-        this.lastWorkingBaseCurr = this.baseCurrSel.value
-        this.lastWorkingQuoteCurr = this.quoteCurrSel.value
+        this.lastWorkingBaseCurr = this.baseCurrency.value
+        this.lastWorkingQuoteCurr = this.quoteCurrency.value
         this.makeRelTimeText()
       })
       .catch(err => console.error(err))
@@ -119,8 +108,8 @@ export default class ConversionForm {
     this.updateDisplay()
     const noTarget = !target
     const newRateRequired =
-      target === this.baseCurrSel ||
-      target === this.quoteCurrSel ||
+      target === this.baseCurrency ||
+      target === this.quoteCurrency ||
       this.exRate.value === ''
     if (noTarget || newRateRequired) {
       await this.setRate(formObj).catch(() => {
@@ -188,47 +177,5 @@ export default class ConversionForm {
       }
       this.relTime.innerHTML = text
     }
-  }
-
-  createFormEl(id, base, quote, rate, time) {
-    // debugger;
-    const innerHTML = `
-    <form id="form-${id}" class="favorite-form">
-        <input class="" id="base-${id}" name="base-amount" type="number" value="1.00" min="0" max="999999"
-            inputmode="decimal" base-input>
-        <label class="" for="base-${id}" base-label>${base.long}</label>
-        <input class="" id="quote-${id}" name="quote-amount" type="number" min="0" max="999999"
-            inputmode="decimal" quote-input>
-        <label class="" for="quote-${id}" quote-label>${quote.long}</label>
-        <div class="fee-container">
-            <label for="fee-${id}">Bank / Card Fee:&nbsp;</label>
-            <select id="fee-${id}" name="fee-rate" fee-rate>
-                <option value="0.00">0%</option>
-                <option value="0.01">1%</option>
-                <option value="0.02">2%</option>
-                <option value="0.03">3%</option>
-                <option value="0.04">4%</option>
-                <option value="0.05">5%</option>
-            </select>
-        </div>
-        <input hidden name="base-currency" value="${base.short}" base-currency>
-        <input hidden name="quote-currency" value="${quote.short}" quote-currency>
-        <input hidden id="ex-rate-${id}" name="ex-rate" value="${rate}" pattern="\\d*\.\\d*" ex-rate>
-        <input hidden id="time-input-${id}" name="time-input" value="${time}" time-input>
-        <div class="rate-updated" id="last-updated-${id}" last-updated>Last updated:
-            <span id="time-${id}" rel-time></span>
-        </div>
-        <button class="use-favorite" type="button" id="use-btn-${id}" use-btn>Use</button>
-    </form>
-    <button id="move-btn-${id}" class="fav-move" move-btn>Move</button>
-    <button id="delete-btn-${id}" class="fav-delete" delete-btn>Delete</button>
-    `
-    const container = document.createElement('div')
-    container.classList.add('favorite-form-container')
-    container.setAttribute('favorite-id', id)
-    container.innerHTML = innerHTML
-    // form.draggable = true;
-    favoritesGrid.prepend(container)
-    this.formEl = container.querySelector('form')
   }
 }

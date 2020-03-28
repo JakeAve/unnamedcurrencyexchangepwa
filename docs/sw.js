@@ -1,13 +1,13 @@
 const staticLabel = 'site-static'
 const staticAssets = [
   '/',
-  './index.html',
-  './styles.css',
-  './main.js',
+  '/index.html',
+  '/styles.css',
+  '/main.js',
   'https://fonts.googleapis.com/css?family=Jaldi|Open+Sans&display=swap',
   'https://fonts.gstatic.com/s/jaldi/v6/or3sQ67z0_CI33NTbJHdBLg9.woff2',
   'https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2',
-  './manifest.json',
+  '/manifest.json',
   '/assets/icons/16x16.png',
   '/assets/icons/32x32.png',
   '/assets/icons/72x72.png',
