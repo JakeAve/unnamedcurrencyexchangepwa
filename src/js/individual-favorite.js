@@ -20,6 +20,31 @@ export default class FavoritesForm {
     this.conversionForm.convertCurrencies()
   }
 
+  get rootProps() {
+    return {
+      id: this.id,
+      base: this.base,
+      baseAmount: this.baseAmount,
+      quote: this.quote,
+      exRate: this.exRate,
+      feeRate: this.feeRate,
+      time: this.time
+    }
+  }
+
+  get baseAmount() {
+    return this.formEl.querySelector('[base-input]').value
+  }
+  get exRate() {
+    return this.formEl.querySelector('[ex-rate]').value
+  }
+  get feeRate() {
+    return this.formEl.querySelector('[fee-rate]').value
+  }
+  get time() {
+    return this.formEl.querySelector('[time-input]').value
+  }
+
   createFavorite({ id, base, baseAmount, quote, exRate, time }) {
     const innerHTML = `
         <form id="form-${id}" class="favorite-form">
@@ -56,7 +81,8 @@ export default class FavoritesForm {
     container.classList.add('favorite-form-container')
     container.setAttribute('favorite-id', id)
     container.innerHTML = innerHTML
-    favoritesGrid.prepend(container)
+    const msg = favoritesGrid.querySelector('#no-favorites-msg')
+    favoritesGrid.insertBefore(container, msg)
     // form.draggable = true;
     return container
   }

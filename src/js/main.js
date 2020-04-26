@@ -3,7 +3,7 @@ serviceWorker()
 
 import ConversionForm from './conversion-form'
 import IndividualFavorite from './individual-favorite'
-import favorites, { localStorageAvailable } from './favorites-array'
+import favorites from './favorites-array'
 import moveFavorite from './move-grid'
 import randomId from './random-id'
 import createCurrencyOptions from './create-currency-options'
@@ -25,12 +25,12 @@ function createNewFavorite() {
   const time = mainConverter.timeInput.value
   const feeRate = mainConverter.feeRate.value
 
-  const alreadyExists = favorites.forms.find(
+  const alreadyExists = favorites.find(
     c => c.base === base && c.quote === quote
   )
 
   if (!alreadyExists && favorites.length < 20) {
-    const favorite = {
+    const favorite = new IndividualFavorite({
       id,
       base,
       baseAmount,
@@ -38,18 +38,11 @@ function createNewFavorite() {
       exRate,
       feeRate,
       time
-    }
-    favorites.unshift(favorite)
-    favorites.save()
-    favorites.forms.unshift(
-      new IndividualFavorite({
-        ...favorite
-      })
-    )
+    })
+    favorites.push(favorite)
   } else if (alreadyExists) {
     alert('This is already saved to favorites')
-    const existingForm = alreadyExists.formEl
-    smoothScrollTo(existingForm)
+    smoothScrollTo(alreadyExists.formEl)
   } else if (favorites.length >= 20)
     alert('You can only save up to 20 favorites')
 }
@@ -59,10 +52,6 @@ function deleteFavorite(btn) {
   const id = favContainer.getAttribute('favorite-id')
   const index1 = favorites.findIndex(f => f.id === id)
   favorites.splice(index1, 1)
-  const index2 = favorites.forms.findIndex(f => f.id === id)
-  favorites.forms.splice(index2, 1)
-  if (localStorageAvailable())
-    localStorage.setItem('favorites', JSON.stringify(favorites))
   favContainer.classList.add('fade-away')
 
   setTimeout(() => favContainer.remove(), 300)
@@ -70,19 +59,17 @@ function deleteFavorite(btn) {
 
 function useFavorite(btn) {
   const id = btn.closest('.favorite-form-container').getAttribute('favorite-id')
-  const favIndex = favorites.forms.findIndex(f => f.id === id)
+  const fave = favorites.find(f => f.id === id)
   const props = [
-    'baseCurrSel',
-    'quoteCurrSel',
+    'baseCurrency',
+    'quoteCurrency',
     'baseInput',
     'quoteInput',
     'feeRate',
     'exRate',
     'timeInput'
   ]
-  props.forEach(
-    p => (mainConverter[p].value = favorites.forms[favIndex][p].value)
-  )
+  props.forEach(p => (mainConverter[p].value = fave.conversionForm[p].value))
   mainConverter.convertCurrencies()
   smoothScrollTo(mainConverter.formEl)
 }
