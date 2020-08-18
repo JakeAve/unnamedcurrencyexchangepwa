@@ -64,6 +64,10 @@ select {
   border-radius: 0;
 }
 
+input[inputmode='decimal'] {
+  letter-spacing: 0.15rem;
+}
+
 option {
   background: $bg-4;
   color: $color-1;
