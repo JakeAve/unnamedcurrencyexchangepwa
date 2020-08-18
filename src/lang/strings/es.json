@@ -1,0 +1,14 @@
+{
+  "exchangeRateUpdated": "Tipo de cambio actualizado: ",
+  "addToFavorites": "Añadir a favoritos",
+  "favorites": "Favoritos",
+  "fee": "Comisión bancaria o de tarjeta:",
+  "use": "Usar",
+  "move": "Mover",
+  "delete": "Eliminar",
+  "close": "Cerrar",
+  "offline": "Su dispositivo está desconectado y no puede obtener este tipo de cambio.",
+  "noLocalStorage": "Tiene que habilitar \"localStorage\" para este sitio de web en tu navegador para añadir un favorito.",
+  "alreadySaved": "Este tipo ya se encuentra en favoritos.",
+  "maxFavorites": "Sólo puede añadir hasta 20 favoritos."
+}

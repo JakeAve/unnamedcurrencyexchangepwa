@@ -1,0 +1,14 @@
+{
+  "exchangeRateUpdated": "Exchange rate updated: ",
+  "addToFavorites": "Add to Favorites",
+  "favorites": "Favorites",
+  "fee": "Bank / Card Fee:",
+  "use": "Use",
+  "move": "Move",
+  "delete": "Delete",
+  "close": "Close",
+  "offline": "Your device is offline and cannot get this currency exchange",
+  "noLocalStorage": "You need to enable \"localStorage\" for this site in your web browser to save a favorite.",
+  "alreadySaved": "This is already saved to favorites",
+  "maxFavorites": "You can only save up to 20 favorites"
+}
